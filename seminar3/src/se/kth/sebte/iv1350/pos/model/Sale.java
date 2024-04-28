@@ -1,15 +1,36 @@
 package se.kth.sebte.iv1350.pos.model;
 
-public class Sale {
+public class Sale{
 	private Basket basket;
+	public Cost totalCostAndVAT;
+	Discount appliedDiscount;
+	
 	public Sale() {
 		basket = new Basket();
 	}
 	
 	
 	public Basket scanItem(Item item){
-		return basket.updateBasket(Item item);
+		if(item != null) {
+			this.basket.updateBasket(item);
+		}
+		return this.basket;
 	}
+	
+	public double applyDiscount(Discount discount) {
+		this.appliedDiscount = discount;
+		this.totalCostAndVAT = this.basket.getGrossTotal();
+		this.totalCostAndVAT.total = this.totalCostAndVAT.total - (discount.itemListDiscount);
+		this.totalCostAndVAT.total = this.totalCostAndVAT.total * (discount.customerIDDiscount/100);
+		this.totalCostAndVAT.total = this.totalCostAndVAT.total * (discount.totalCostDiscount/100);
+		
+		return this.totalCostAndVAT.total;
+	}
+	
+	public Basket getBasket() {
+		return this.basket;
+	}
+	
 	
 	
 }

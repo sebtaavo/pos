@@ -17,4 +17,9 @@ public class Item {
 		this.price = itemDTO.price;
 		this.VAT = itemDTO.VAT;
 	}
+	
+	public ItemDTO getItemDTO() {
+		ItemDTO itemDTO = new ItemDTO(this.name, this.itemID, this.quantity, this.description, this.price, this.VAT);
+		return itemDTO;
+	}
 }

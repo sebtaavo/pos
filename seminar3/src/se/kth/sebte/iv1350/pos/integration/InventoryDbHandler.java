@@ -1,4 +1,6 @@
 package se.kth.sebte.iv1350.pos.integration;
+import java.util.ArrayList;
+
 import se.kth.sebte.iv1350.pos.model.Item;
 
 public class InventoryDbHandler {
@@ -34,5 +36,15 @@ public class InventoryDbHandler {
 	
 	private boolean verifyItemID(int itemID) {
 		return true;
+	}
+	
+	public void updateInventory(ArrayList<Item> items) {
+		for(Item i: items) {
+			removeFromInventory(i);
+		}
+	}
+	
+	private void removeFromInventory(Item item) {
+		System.out.println("Removed " + item.quantity + " " + item.name + " from external inventory.");
 	}
 }
