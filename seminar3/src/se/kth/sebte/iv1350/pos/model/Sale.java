@@ -21,8 +21,8 @@ public class Sale{
 		this.appliedDiscount = discount;
 		this.totalCostAndVAT = this.basket.getGrossTotal();
 		this.totalCostAndVAT.total = this.totalCostAndVAT.total - (discount.itemListDiscount);
-		this.totalCostAndVAT.total = this.totalCostAndVAT.total * (discount.customerIDDiscount/100);
-		this.totalCostAndVAT.total = this.totalCostAndVAT.total * (discount.totalCostDiscount/100);
+		this.totalCostAndVAT.total = this.totalCostAndVAT.total * (1 - discount.customerIDDiscount/100);
+		this.totalCostAndVAT.total = this.totalCostAndVAT.total * (1 - discount.totalCostDiscount/100);
 		
 		return this.totalCostAndVAT.total;
 	}
