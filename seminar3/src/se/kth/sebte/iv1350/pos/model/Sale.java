@@ -3,7 +3,7 @@ package se.kth.sebte.iv1350.pos.model;
 public class Sale{
 	private Basket basket;
 	public Cost totalCostAndVAT;
-	Discount appliedDiscount;
+	public Discount appliedDiscount;
 	
 	public Sale() {
 		basket = new Basket();

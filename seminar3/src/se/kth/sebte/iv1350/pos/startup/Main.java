@@ -10,8 +10,14 @@ public class Main {
 	private View view = new View(contr);
 
 	public static void main(String[] args) {
-		System.out.println("Test");
 		Main main = new Main();
+		main.view.startSale();
+		main.view.scanItem(1, 2);
+		main.view.scanItem(2, 1);
+		main.view.endSale();
+		main.view.requestDiscount(1337);
+		main.view.presentPayment(500);
+		
 	}
 
 }

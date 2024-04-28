@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 public class Basket {
 	ArrayList<Item> itemList;
-	private Cost basketTotalCost;
 	public Basket() {
 		itemList = new ArrayList<Item>();
 	}
@@ -20,7 +19,6 @@ public class Basket {
 		if(itemAlreadyInBasket == false) {
 			this.itemList.add(item);
 		}
-		this.basketTotalCost = getGrossTotal();
 	}
 	
 	int applyDiscount(Discount discount) {

@@ -45,6 +45,6 @@ public class InventoryDbHandler {
 	}
 	
 	private void removeFromInventory(Item item) {
-		System.out.println("Removed " + item.quantity + " " + item.name + " from external inventory.");
+		//This method contacts an external database. Not possible to implement at this time.
 	}
 }

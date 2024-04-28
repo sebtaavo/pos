@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 
 public class SaleDTO {
 	LocalDateTime timeOfSale;
-	double grossPrice;
+	double total;
 	double netPrice;
-	public SaleDTO(double grossPrice, double netPrice) {
-		timeOfSale = LocalDateTime.now();
-		this.grossPrice = grossPrice;
-		this.netPrice = netPrice;
+	double VAT;
+	public SaleDTO(double total, double VAT) {
+		this.timeOfSale = LocalDateTime.now();
+		this.total = total;
+		this.VAT = VAT;
 	}
 }

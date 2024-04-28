@@ -1,5 +1,7 @@
 package se.kth.sebte.iv1350.pos.controller;
 import se.kth.sebte.iv1350.pos.integration.DbHandler;
+import se.kth.sebte.iv1350.pos.integration.PrinterHandler;
+import se.kth.sebte.iv1350.pos.integration.SaleDTO;
 import se.kth.sebte.iv1350.pos.integration.ScanResult;
 import se.kth.sebte.iv1350.pos.model.Basket;
 import se.kth.sebte.iv1350.pos.model.Discount;
@@ -10,10 +12,12 @@ public class Controller {
 	public Basket basket;
 	private Sale currentSale;
 	private DbHandler dbHandler;
+	private PrinterHandler printerHandler;
 	
 	public Controller(DbHandler dbHandler) {
 		this.dbHandler = dbHandler;
 		this.basket = new Basket();
+		this.printerHandler = new PrinterHandler();
 	}
 	
 	
@@ -28,16 +32,22 @@ public class Controller {
 		if(item == null) {
 			validScan = false;
 		}
-		ScanResult scanResult = new ScanResult(this.basket, validScan);
+		ScanResult scanResult = new ScanResult(this.basket, item, validScan);
 		return scanResult;
 	}
 	
 	public double acceptPayment(double amount) { //view receives information of how much change the customer is owed
 		this.dbHandler.updateInventory(currentSale.getBasket().getItemList());
-		
-		//needs to update accounting system, tell the printer what to print, and update inventory system
+		SaleDTO saleDTO = new SaleDTO(currentSale.totalCostAndVAT.total, currentSale.totalCostAndVAT.VAT);
+		this.dbHandler.updateAccounting(saleDTO);
 		double change = amount - (currentSale.totalCostAndVAT.total + currentSale.totalCostAndVAT.VAT);
+		this.createReceipt(currentSale, amount, change);
+
 		return change;
+	}
+	
+	private void createReceipt(Sale currentSale, double amount, double change) {
+		this.printerHandler.createReceipt(currentSale, amount, change);
 	}
 	
 	public double requestDiscount(int customerID) { //view receives information about how much the prices is discounted

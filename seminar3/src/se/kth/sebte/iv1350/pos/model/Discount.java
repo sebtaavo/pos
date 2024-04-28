@@ -9,8 +9,8 @@ public class Discount {
 	double customerIDDiscount;
 	
 	public Discount(DiscountDTO discountDTO) {
-		this.itemListDiscount = discountDTO.amount;
-		this.totalCostDiscount = discountDTO.description;
+		this.itemListDiscount = discountDTO.itemListDiscount;
+		this.totalCostDiscount = discountDTO.totalCostDiscount;
 		this.customerIDDiscount = discountDTO.customerIDDiscount;
 	}
 	

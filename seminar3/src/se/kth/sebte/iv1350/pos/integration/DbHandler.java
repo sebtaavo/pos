@@ -1,6 +1,5 @@
 package se.kth.sebte.iv1350.pos.integration;
 import java.util.ArrayList;
-
 import se.kth.sebte.iv1350.pos.model.Discount;
 import se.kth.sebte.iv1350.pos.model.Item;
 
@@ -8,14 +7,12 @@ public class DbHandler {
 	private AccountingDbHandler accountingDbHandler;
 	private InventoryDbHandler inventoryDbHandler;
 	private DiscountDbHandler discountDbHandler;
-	private PrinterHandler printerHandler;
 	
 	
 	public DbHandler() {
 		accountingDbHandler = new AccountingDbHandler();
 		inventoryDbHandler = new InventoryDbHandler();
 		discountDbHandler = new DiscountDbHandler();
-		printerHandler = new PrinterHandler();
 	}
 	
 	public Item fetchItem(int itemID, int quantity) {
@@ -29,4 +26,10 @@ public class DbHandler {
 	public void updateInventory(ArrayList<Item> items) {
 		this.inventoryDbHandler.updateInventory(items);
 	}
+	
+	public void updateAccounting(SaleDTO saleDTO) {
+		this.accountingDbHandler.updateAccountingSystem(saleDTO);
+	}
+	
+	
 }
