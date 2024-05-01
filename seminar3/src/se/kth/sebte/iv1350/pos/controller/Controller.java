@@ -89,5 +89,13 @@ public class Controller {
 		double totalAfterDiscount = this.currentSale.applyDiscount(discount);
 		return totalAfterDiscount;
 	}
+	
+	/**
+	 * Getter for the current sale. Only used in the unit testing of this class.
+	 * @return currentSale   The current sale.
+	 */
+	public Sale getCurrentSale() {
+		return currentSale;
+	}
 }
 

@@ -45,6 +45,10 @@ public class DiscountDbHandler {
 	}
 	
 	private double customerIDDiscount(int customerID) {
+		if(customerID < 0) { //This is a substitute for a real method checking if the customer ID exists in the external database.
+			//This block executes if the ID was invalid.
+			return -1;
+		}
 		return 0; //returns a percentage to be reduced from total price
 	}
 	

@@ -48,7 +48,10 @@ public class InventoryDbHandler {
 		}
 	}
 	
-	private boolean verifyItemID(int itemID) {
+	private boolean verifyItemID(int itemID) { //This class would have deeper logic if we knew how the external inventory system was structured.
+		if(itemID < 0) {
+			return false;
+		}
 		return true;
 	}
 	
