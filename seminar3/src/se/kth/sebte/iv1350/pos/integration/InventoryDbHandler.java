@@ -3,11 +3,25 @@ import java.util.ArrayList;
 
 import se.kth.sebte.iv1350.pos.model.Item;
 
+/**
+ * 
+ * @author sebastian taavo ek
+ * A class responsible for handling all contact with the external Inventory system.
+ */
 public class InventoryDbHandler {
+	/**
+	 * Creates an <code>InventoryDbHandler</code>.
+	 */
 	public InventoryDbHandler() {
 		
 	}
 	
+	/**
+	 * Fetches an <code>Item</code> or <code>Null</code> object by contacting the database with the ItemID information.
+	 * @param itemID  Identifier obtained through a bar-code scan.
+	 * @param quantity  Quantity of the scanned item to be registered to the sale.
+	 * @return
+	 */
 	public Item fetchItem(int itemID, int quantity) {
 		ItemDTO itemDTO;
 		if(verifyItemID(itemID)) {
@@ -38,6 +52,10 @@ public class InventoryDbHandler {
 		return true;
 	}
 	
+	/**
+	 * Updates the external inventory system with information about which items were sold.
+	 * @param items  The <code>Item</code> list contained in the <code>Basket</code> of the current <code>Sale</code>.
+	 */
 	public void updateInventory(ArrayList<Item> items) {
 		for(Item i: items) {
 			removeFromInventory(i);

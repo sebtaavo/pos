@@ -1,13 +1,29 @@
 package se.kth.sebte.iv1350.pos.model;
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author sebastian taavo ek
+ * This class is responsible for keeping track of the items currently being sold
+ * in a given <code>Sale</code>. It also handles updating the list of items each time
+ * an item is scanned, and can return the total cost and VAT of the items in the list.
+ *
+ */
 public class Basket {
 	ArrayList<Item> itemList;
+	
+	/**
+	 * Creates a <code>Basket</code> object.
+	 */
 	public Basket() {
 		itemList = new ArrayList<Item>();
 	}
 	
 	
+	/**
+	 * Updates the basket with a new item. Updates quantity if an item of the same ID already exists in the list.
+	 * @param item  The new item scanned in through a bar-code.
+	 */
 	void updateBasket(Item item) {
 		boolean itemAlreadyInBasket = false;
 		for(Item i: this.itemList) {
@@ -21,11 +37,11 @@ public class Basket {
 		}
 	}
 	
-	int applyDiscount(Discount discount) {
-		return 0;
-		
-	}
-	
+	/**
+	 * Creates an object of type <code>Cost</code>, containing the total price and VAT
+	 * tally'd up from all items in the current item list.
+	 * @return newTotal   The <code>Cost</code> including both price and VAT of all items combined.
+	 */
 	public Cost getGrossTotal() {
 		double tallyVAT = 0;
 		double tallyTotal = 0;
@@ -39,6 +55,10 @@ public class Basket {
 		return newTotal;
 	}
 	
+	/**
+	 * Getter for the current items in the list.
+	 * @return
+	 */
 	public ArrayList<Item> getItemList(){
 		return itemList;
 	}
