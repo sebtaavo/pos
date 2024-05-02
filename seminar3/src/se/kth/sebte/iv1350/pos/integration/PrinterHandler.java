@@ -1,7 +1,11 @@
 package se.kth.sebte.iv1350.pos.integration;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import se.kth.sebte.iv1350.pos.model.Receipt;
 import se.kth.sebte.iv1350.pos.model.Sale;
@@ -32,13 +36,17 @@ public class PrinterHandler {
 	 * @param change  The change that the customer is owed.
 	 */
 	public void createReceipt(Sale currentSale, double amount, double change) {
+		DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+		df.setRoundingMode(RoundingMode.HALF_UP);
 		this.receipt = new Receipt();
 		this.receipt.addTimeOfSaleLine(LocalDateTime.now());
 		this.receipt.addItemLines(currentSale.getBasket().getItemList());
 		this.receipt.addTotalLine(currentSale.getBasket().getGrossTotal().total);
 		this.receipt.addDiscountLine(currentSale.appliedDiscount);
-		this.receipt.addTotalAfterDiscountLine(currentSale.totalCostAndVAT.total);
-		this.receipt.addVATLine(currentSale.totalCostAndVAT.VAT);
+		String roundedDiscountedTotal = df.format(currentSale.totalCostAndVAT.total + currentSale.totalCostAndVAT.VAT);
+		this.receipt.addTotalAfterDiscountLine(roundedDiscountedTotal);
+		String roundedVAT = df.format(currentSale.totalCostAndVAT.VAT);
+		this.receipt.addVATLine(roundedVAT);
 		this.receipt.addPaymentLine(amount);
 		this.receipt.addChangeLine(change);
 		this.receipt.addEndLine();

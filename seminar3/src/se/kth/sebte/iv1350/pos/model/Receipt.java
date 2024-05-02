@@ -70,11 +70,11 @@ public class Receipt {
 	 * Adds a line to the receipt containing the total price of the sale in SEK, after discounts.
 	 * @param totalAfterDiscount  The total price after discounts have been applied.
 	 */
-	public void addTotalAfterDiscountLine(double totalAfterDiscount) {
+	public void addTotalAfterDiscountLine(String totalAfterDiscount) {
 		String totalRow = "Total after discounts: ";
 		String blankSpace = " ".repeat(14);
 		totalRow += blankSpace;
-		totalRow = totalRow + String.valueOf(totalAfterDiscount) + " SEK";
+		totalRow = totalRow + totalAfterDiscount + " SEK";
 		
 		this.receiptLines.add(totalRow);
 	}
@@ -96,9 +96,9 @@ public class Receipt {
 	 * Adds a line to the receipt containing the VAT amount for this purchase.
 	 * @param VAT   The VAT value to be printed.
 	 */
-	public void addVATLine(double VAT) {
+	public void addVATLine(String VAT) {
 		String totalRow = "VAT: ";
-		totalRow = totalRow + String.valueOf(VAT) + " SEK\n";
+		totalRow = totalRow + VAT + " SEK\n";
 		
 		this.receiptLines.add(totalRow); 
 	}
