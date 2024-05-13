@@ -42,7 +42,7 @@ public class DbHandler {
 	 * @param items  The full list of items to-be-purchased.
 	 * @return discount   The discount(s) to be applied to the sale.
 	 */
-	public Discount fetchDiscount(int customerID, double totalPrice, ArrayList<Item> items) {
+	public Discount fetchDiscount(int customerID, double totalPrice, ArrayList<ItemDTO> items) {
 		return this.discountDbHandler.requestDiscount(customerID, totalPrice, items);
 	}
 	

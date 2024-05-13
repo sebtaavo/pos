@@ -1,6 +1,4 @@
 package se.kth.sebte.iv1350.pos.integration;
-import se.kth.sebte.iv1350.pos.model.Basket;
-import se.kth.sebte.iv1350.pos.model.Item;
 
 /**
  * 
@@ -11,14 +9,14 @@ import se.kth.sebte.iv1350.pos.model.Item;
  * newest <code>Item</code> scanned in through the bar-code.
  */
 public class ScanResult {
-	public Basket basket;
+	public BasketDTO basket;
 	public boolean validItemID;
-	public Item item;;
+	public ItemDTO item;;
 	
 	/*
 	 * Creates a ScanResult object.
 	 */
-	public ScanResult(Basket basket, Item item, boolean validItemID){
+	public ScanResult(BasketDTO basket, ItemDTO item, boolean validItemID){
 		this.basket = basket;
 		this.validItemID = validItemID;
 		this.item = item;

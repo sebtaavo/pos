@@ -1,5 +1,7 @@
 package se.kth.sebte.iv1350.pos.model;
 
+import se.kth.sebte.iv1350.pos.integration.BasketDTO;
+
 /**
  * 
  * @author sebastian taavo ek
@@ -38,11 +40,11 @@ public class Sale{
 	 * @param item  The item obtained through a new bar-code scan.
 	 * @return this.basket  The updated basket containing all the items in our basket.
 	 */
-	public Basket scanItem(Item item){
+	public BasketDTO scanItem(Item item){
 		if(item != null) {
 			this.basket.updateBasket(item);
 		}
-		return this.basket;
+		return this.basket.getBasketDTO();
 	}
 	
 	/**

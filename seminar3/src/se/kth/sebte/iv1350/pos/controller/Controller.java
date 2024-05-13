@@ -1,9 +1,9 @@
 package se.kth.sebte.iv1350.pos.controller;
+import se.kth.sebte.iv1350.pos.integration.BasketDTO;
 import se.kth.sebte.iv1350.pos.integration.DbHandler;
 import se.kth.sebte.iv1350.pos.integration.PrinterHandler;
 import se.kth.sebte.iv1350.pos.integration.SaleDTO;
 import se.kth.sebte.iv1350.pos.integration.ScanResult;
-import se.kth.sebte.iv1350.pos.model.Basket;
 import se.kth.sebte.iv1350.pos.model.Discount;
 import se.kth.sebte.iv1350.pos.model.Item;
 import se.kth.sebte.iv1350.pos.model.Sale;
@@ -16,7 +16,7 @@ import se.kth.sebte.iv1350.pos.model.Sale;
  *
  */
 public class Controller {
-	public Basket basket;
+	public BasketDTO basket;
 	private Sale currentSale;
 	private DbHandler dbHandler;
 	private PrinterHandler printerHandler;
@@ -27,7 +27,6 @@ public class Controller {
 	 */
 	public Controller(DbHandler dbHandler) {
 		this.dbHandler = dbHandler;
-		this.basket = new Basket();
 		this.printerHandler = new PrinterHandler();
 	}
 	
@@ -37,6 +36,7 @@ public class Controller {
 	 */
 	public void startSale() {
 		currentSale = new Sale();
+		this.basket = new BasketDTO(currentSale.getBasket());
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class Controller {
 		if(item == null) {
 			validScan = false;
 		}
-		ScanResult scanResult = new ScanResult(this.basket, item, validScan);
+		ScanResult scanResult = new ScanResult(this.basket, item.getItemDTO(), validScan);
 		return scanResult;
 	}
 	

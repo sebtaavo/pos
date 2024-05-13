@@ -1,19 +1,16 @@
 package se.kth.sebte.iv1350.pos.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import se.kth.sebte.iv1350.pos.integration.DbHandler;
+import se.kth.sebte.iv1350.pos.integration.ItemDTO;
 import se.kth.sebte.iv1350.pos.integration.ScanResult;
 import se.kth.sebte.iv1350.pos.model.Cost;
 import se.kth.sebte.iv1350.pos.model.Discount;
-import se.kth.sebte.iv1350.pos.model.Item;
+
 
 
 class ControllerTest {
@@ -42,7 +39,7 @@ class ControllerTest {
 		//Test that an object of type Item is returned by the method
 		contr.startSale();
 		ScanResult scan1 = contr.scanItem(1, 1);
-		boolean isItem = scan1.item instanceof Item;
+		boolean isItem = scan1.item instanceof ItemDTO;
 		assertEquals(true, isItem);
 		
 		//Test that a null object is returned by the method if our item ID is invalid.

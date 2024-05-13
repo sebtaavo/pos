@@ -1,6 +1,8 @@
 package se.kth.sebte.iv1350.pos.model;
 import java.util.ArrayList;
 
+import se.kth.sebte.iv1350.pos.integration.BasketDTO;
+
 /**
  * 
  * @author sebastian taavo ek
@@ -61,5 +63,9 @@ public class Basket {
 	 */
 	public ArrayList<Item> getItemList(){
 		return itemList;
+	}
+	
+	public BasketDTO getBasketDTO(){
+		return new BasketDTO(this);
 	}
 }

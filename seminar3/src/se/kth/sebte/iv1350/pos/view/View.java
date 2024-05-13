@@ -1,7 +1,7 @@
 package se.kth.sebte.iv1350.pos.view;
 import se.kth.sebte.iv1350.pos.controller.Controller;
+import se.kth.sebte.iv1350.pos.integration.BasketDTO;
 import se.kth.sebte.iv1350.pos.integration.ScanResult;
-import se.kth.sebte.iv1350.pos.model.Basket;
 
 /**
  * 
@@ -17,7 +17,7 @@ public class View {
 	 * <code>Basket</code> object containing information about the current sale. 
 	 * Is continuously updated upon each new item scan.
 	 */
-	Basket basket;
+	BasketDTO basket;
 	double totalPrice;
 	double change;
 	

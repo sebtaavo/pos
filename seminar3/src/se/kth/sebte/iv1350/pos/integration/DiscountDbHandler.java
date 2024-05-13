@@ -2,7 +2,6 @@ package se.kth.sebte.iv1350.pos.integration;
 
 import java.util.ArrayList;
 import se.kth.sebte.iv1350.pos.model.Discount;
-import se.kth.sebte.iv1350.pos.model.Item;
 /**
  * 
  * @author sebastian taavo ek
@@ -26,7 +25,7 @@ public class DiscountDbHandler {
 	 * @param items  The full list of items currently being purchased by the customer.
 	 * @return discount   The <code>Discount</code> object which will be used to alter the price the customer has to pay.
 	 */
-	public Discount requestDiscount(int customerID, double totalPrice, ArrayList<Item> items) {
+	public Discount requestDiscount(int customerID, double totalPrice, ArrayList<ItemDTO> items) {
 		final double discountFromList = itemListDiscount(items);
 		final double discountFromTotal = totalCostDiscount(totalPrice);
 		final double discountFromCustomerID = customerIDDiscount(customerID);
@@ -36,7 +35,7 @@ public class DiscountDbHandler {
 		return discount;
 	}
 	
-	private double itemListDiscount(ArrayList<Item> items) {
+	private double itemListDiscount(ArrayList<ItemDTO> items) {
 		return 0; //returns a sum to be reduced
 	}
 	

@@ -97,7 +97,7 @@ public class Receipt {
 	 * @param VAT   The VAT value to be printed.
 	 */
 	public void addVATLine(String VAT) {
-		String totalRow = "VAT: ";
+		String totalRow = "Plus VAT:                            ";
 		totalRow = totalRow + VAT + " SEK\n";
 		
 		this.receiptLines.add(totalRow); 
