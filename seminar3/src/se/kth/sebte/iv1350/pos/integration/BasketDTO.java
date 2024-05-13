@@ -26,6 +26,10 @@ ArrayList<ItemDTO> itemList;
 	
 	}
 	
+	/**
+	 * Method to return the total <code>Cost</code> of the current Basket. Effectively bunching up the total VAT and total price in one class object.
+	 * @return newTotal   A <code>Cost</code> object including information of VAT and total price.
+	 */
 	public Cost getGrossTotal() {
 		double tallyVAT = 0;
 		double tallyTotal = 0;
@@ -39,6 +43,10 @@ ArrayList<ItemDTO> itemList;
 		return newTotal;
 	}
 	
+	/**
+	 * Getter for the current items in the basket.
+	 * @return itemList   Current items in the basket.
+	 */
 	public ArrayList<ItemDTO> getItemList(){
 		return itemList;
 	}
