@@ -1,7 +1,10 @@
 package se.kth.sebte.iv1350.pos.view;
 import se.kth.sebte.iv1350.pos.controller.Controller;
 import se.kth.sebte.iv1350.pos.integration.BasketDTO;
+import se.kth.sebte.iv1350.pos.integration.DatabaseConnectionException;
+import se.kth.sebte.iv1350.pos.integration.ItemIdentifierException;
 import se.kth.sebte.iv1350.pos.integration.ScanResult;
+import se.kth.sebte.iv1350.pos.util.Logger;
 
 /**
  * 
@@ -20,6 +23,8 @@ public class View {
 	BasketDTO basket;
 	double totalPrice;
 	double change;
+	private TotalRevenueView revenueView;
+	private TotalRevenueFileOutput revenueFileOutput;
 	
 	/**
 	 * Creates a new <code>View</code> object to give input to the sale process at a retail store.
@@ -30,6 +35,10 @@ public class View {
 	
 	public View(Controller contr) {
 		this.contr = contr;
+		this.revenueFileOutput = new TotalRevenueFileOutput();
+		this.revenueView = new TotalRevenueView();
+		contr.addIncomeObserver(revenueFileOutput);
+		contr.addIncomeObserver(revenueView);
 	}
 	
 	/**
@@ -53,22 +62,28 @@ public class View {
 	
 	/**
 	 * Adds a new item of a specified quantity to the sale through a bar-code scan.
-	 * Also updates the <code>View</code>'s information about the current basket
-	 * and if the scan was valid, through the return of a <code>ScanResult</code> DT object.
+	 * Also updates the <code>View</code>'s information about the current basket.
+	 * Checks for exceptions if the item identifier was invalid or not found in the database,
+	 * as well as if the database connection failed to establish.
 	 * 
 	 * @param itemID  The integer item ID obtained from scanning a product bar-code.
 	 * @param quantity  The user-inputed amount of the scanned item.
 	 */
-	
 	public void scanItem(int itemID, int quantity) {
-		ScanResult scanResult = contr.scanItem(itemID, quantity);
-		if(scanResult.validItemID) {
+		try {
+			ScanResult scanResult = contr.scanItem(itemID, quantity);
 			this.basket = scanResult.basket;
 			this.printScanToConsole(scanResult);
+		}catch(ItemIdentifierException e1) {
+			e1.printStackTrace();
+			Logger.log(e1.getMessage(), "logs/ExceptionLog.txt", true);
+			System.out.println("Barcode did not yield a valid item identifier. Re-scan or enter product manually.");
+		}catch(DatabaseConnectionException e2) {
+			e2.printStackTrace();
+			Logger.log(e2.getMessage(), "logs/ExceptionLog.txt", true);
+			System.out.println("Failed to connect to the inventory server. Check internet connection or status of inventory server.");
 		}
-		else {
-			System.out.println("Scan yielded invalid itemID. Basket content unchanged.");
-		}
+		
 	}
 	
 	/**

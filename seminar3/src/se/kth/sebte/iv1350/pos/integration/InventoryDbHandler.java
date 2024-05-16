@@ -22,34 +22,37 @@ public class InventoryDbHandler {
 	 * @param quantity  Quantity of the scanned item to be registered to the sale.
 	 * @return
 	 */
-	public Item fetchItem(int itemID, int quantity) {
+	public Item fetchItem(int itemID, int quantity) throws ItemIdentifierException, DatabaseConnectionException{
 		ItemDTO itemDTO;
-		if(verifyItemID(itemID)) {
-			itemDTO = this.requestItemDTOFromDb(itemID, quantity);
-			return new Item(itemDTO);
-		}
-		else {
-			return null;
-		}
+		itemDTO = this.requestItemDTOFromDb(itemID, quantity);
+		return new Item(itemDTO);
+		
+
 	}
 	
-	private ItemDTO requestItemDTOFromDb(int itemID, int quantity) {
+	private ItemDTO requestItemDTOFromDb(int itemID, int quantity) throws ItemIdentifierException, DatabaseConnectionException{
 		ItemDTO itemDTO;
-		switch(itemID) { 
+		if(verifyItemID(itemID)) {
+			switch(itemID) { 
 			case(1):
 				itemDTO = new ItemDTO("BigWheel Oatmeal", itemID, quantity, "BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free", 29.9, 6);
 				return itemDTO;
 			case(2):
 				itemDTO = new ItemDTO("YouGoGo Blueberry", itemID, quantity, "YouGoGo Blueberry 240g, low sugar yoghurt, blueberry flavour", 14.9, 6);
 				return itemDTO;
+			case(3): //This is a dummy case to illustrate what would happen if we failed to connect to the hypothetical server.
+				throw new DatabaseConnectionException("Failed to connect to external inventory server when fetching item data. Verify internet connection or status of server.");
 			default:
-				itemDTO = new ItemDTO("Error", itemID, quantity, "Error", 0, 0);
-				return itemDTO;
+				throw new ItemIdentifierException("Item ID " + itemID + " could not be found in the database.");
+			}
+				
+		}else {
+			throw new ItemIdentifierException("Item ID " + itemID + " was not found in the external inventory database.");
 		}
 	}
-	
-	private boolean verifyItemID(int itemID) { //This class would have deeper logic if we knew how the external inventory system was structured.
-		if(itemID < 0) {
+		
+	private boolean verifyItemID(int itemID){ //This class would have deeper logic if we knew how the external inventory system was structured.
+		if(itemID < 0) { //This method would query the database to see if the itemID is valid, and probably return the itemDTO and not a boolean.
 			return false;
 		}
 		return true;

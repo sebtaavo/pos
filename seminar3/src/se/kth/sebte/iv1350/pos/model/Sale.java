@@ -1,6 +1,10 @@
 package se.kth.sebte.iv1350.pos.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.kth.sebte.iv1350.pos.integration.BasketDTO;
+import se.kth.sebte.iv1350.pos.util.IncomeObserver;
 
 /**
  * 
@@ -13,6 +17,7 @@ import se.kth.sebte.iv1350.pos.integration.BasketDTO;
 
 public class Sale{
 	private Basket basket;
+	private List<IncomeObserver> incomeObservers = new ArrayList<>();
 	/**
 	 * Stored public information about the total price and VAT to be paid for this purchase,
 	 * after a discount has been applied.
@@ -73,6 +78,22 @@ public class Sale{
 	 */
 	public Basket getBasket() {
 		return this.basket;
+	}
+	
+	public void addIncomeObserver(IncomeObserver incomeObserver) {
+		this.incomeObservers.add(incomeObserver);
+	}
+	
+	public double acceptPayment() {
+		double cost = totalCostAndVAT.total + totalCostAndVAT.VAT;
+		this.notifyObservers(cost);
+		return cost;
+	}
+	
+	private void notifyObservers(double payment) {
+		for(IncomeObserver obs: incomeObservers) {
+			obs.newSale(payment);
+		}
 	}
 	
 	

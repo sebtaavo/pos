@@ -10,15 +10,13 @@ package se.kth.sebte.iv1350.pos.integration;
  */
 public class ScanResult {
 	public BasketDTO basket;
-	public boolean validItemID;
 	public ItemDTO item;;
 	
 	/*
 	 * Creates a ScanResult object.
 	 */
-	public ScanResult(BasketDTO basket, ItemDTO item, boolean validItemID){
+	public ScanResult(BasketDTO basket, ItemDTO item){
 		this.basket = basket;
-		this.validItemID = validItemID;
 		this.item = item;
 	}
 

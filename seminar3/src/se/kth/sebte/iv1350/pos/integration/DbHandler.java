@@ -31,7 +31,7 @@ public class DbHandler {
 	 * @param quantity   The amount of said item to be processed.
 	 * @return item  The item found in the database. Can also be null if the bar-code scan failed.
 	 */
-	public Item fetchItem(int itemID, int quantity) {
+	public Item fetchItem(int itemID, int quantity) throws ItemIdentifierException, DatabaseConnectionException{
 		return this.inventoryDbHandler.fetchItem(itemID, quantity);
 	}
 	

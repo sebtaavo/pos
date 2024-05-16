@@ -1,0 +1,7 @@
+[2024-05-16 10:53:58] Item ID -1 was not found in the external inventory database.
+[2024-05-16 10:55:04] Failed to connect to external inventory server when fetching item data. Verify internet connection or status of server.
+[2024-05-16 10:55:54] Failed to connect to external inventory server when fetching item data. Verify internet connection or status of server.
+[2024-05-16 10:56:53] Failed to connect to external inventory server when fetching item data. Verify internet connection or status of server.
+[2024-05-16 10:56:53] Item ID -1 was not found in the external inventory database.
+[2024-05-16 10:58:53] Item ID 6 could not be found in the database.
+[2024-05-16 11:01:58] Item ID 7 could not be found in the database.

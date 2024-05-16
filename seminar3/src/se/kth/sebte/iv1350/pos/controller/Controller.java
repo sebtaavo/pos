@@ -1,12 +1,18 @@
 package se.kth.sebte.iv1350.pos.controller;
+import java.util.ArrayList;
+import java.util.List;
+
 import se.kth.sebte.iv1350.pos.integration.BasketDTO;
+import se.kth.sebte.iv1350.pos.integration.DatabaseConnectionException;
 import se.kth.sebte.iv1350.pos.integration.DbHandler;
+import se.kth.sebte.iv1350.pos.integration.ItemIdentifierException;
 import se.kth.sebte.iv1350.pos.integration.PrinterHandler;
 import se.kth.sebte.iv1350.pos.integration.SaleDTO;
 import se.kth.sebte.iv1350.pos.integration.ScanResult;
 import se.kth.sebte.iv1350.pos.model.Discount;
 import se.kth.sebte.iv1350.pos.model.Item;
 import se.kth.sebte.iv1350.pos.model.Sale;
+import se.kth.sebte.iv1350.pos.util.IncomeObserver;
 
 /**
  * 
@@ -16,10 +22,11 @@ import se.kth.sebte.iv1350.pos.model.Sale;
  *
  */
 public class Controller {
-	public BasketDTO basket;
+	private BasketDTO basket;
 	private Sale currentSale;
 	private DbHandler dbHandler;
 	private PrinterHandler printerHandler;
+	private List<IncomeObserver> incomeObservers = new ArrayList<>();
 	
 	/**
 	 * Creates an instance of this object.
@@ -36,6 +43,9 @@ public class Controller {
 	 */
 	public void startSale() {
 		currentSale = new Sale();
+		for(IncomeObserver obs: incomeObservers) {
+			currentSale.addIncomeObserver(obs);
+		}
 		this.basket = new BasketDTO(currentSale.getBasket());
 	}
 	
@@ -45,14 +55,10 @@ public class Controller {
 	 * @param quantity  The amount of the item being purchased.
 	 * @return scanResult  The result of the bar-code scan.
 	 */
-	public ScanResult scanItem(int itemID, int quantity) {
-		boolean validScan = true;
+	public ScanResult scanItem(int itemID, int quantity) throws ItemIdentifierException, DatabaseConnectionException{
 		Item item = this.dbHandler.fetchItem(itemID, quantity);
 		this.basket = this.currentSale.scanItem(item);
-		if(item == null) {
-			validScan = false;
-		}
-		ScanResult scanResult = new ScanResult(this.basket, item.getItemDTO(), validScan);
+		ScanResult scanResult = new ScanResult(this.basket, item.getItemDTO());
 		return scanResult;
 	}
 	
@@ -68,7 +74,7 @@ public class Controller {
 		this.dbHandler.updateInventory(currentSale.getBasket().getItemList());
 		SaleDTO saleDTO = new SaleDTO(currentSale.totalCostAndVAT.total, currentSale.totalCostAndVAT.VAT);
 		this.dbHandler.updateAccounting(saleDTO);
-		double change = amount - (currentSale.totalCostAndVAT.total + currentSale.totalCostAndVAT.VAT);
+		double change = amount - currentSale.acceptPayment();
 		this.createReceipt(currentSale, amount, change);
 
 		return change;
@@ -88,6 +94,10 @@ public class Controller {
 		Discount discount = this.dbHandler.fetchDiscount(customerID, currentSale.getBasket().getGrossTotal().total, basket.getItemList());
 		double totalAfterDiscount = this.currentSale.applyDiscount(discount);
 		return totalAfterDiscount;
+	}
+	
+	public void addIncomeObserver(IncomeObserver incomeObserver) {
+		this.incomeObservers.add(incomeObserver);
 	}
 	
 	/**
