@@ -26,10 +26,13 @@ public class DbHandler {
 	}
 	
 	/**
-	 * Fetches an <code>Item</code> from the <code>InventoryDbHandler</code>.
+	 * Fetches an <code>Item</code> from the <code>InventoryDbHandler</code>. Throws an exception back to the <code>Controller</code>
+	 * if the item identifier was faulty or if the database could not be accessed.
 	 * @param itemID  The unique item identifier found through the bar-code.
 	 * @param quantity   The amount of said item to be processed.
 	 * @return item  The item found in the database. Can also be null if the bar-code scan failed.
+	 * @throws ItemIdentifierException, DatabaseConnectionException   The exceptions thrown if the item identifier was faulty, or if database could
+	 * not be accessed.
 	 */
 	public Item fetchItem(int itemID, int quantity) throws ItemIdentifierException, DatabaseConnectionException{
 		return this.inventoryDbHandler.fetchItem(itemID, quantity);

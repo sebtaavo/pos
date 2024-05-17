@@ -80,10 +80,20 @@ public class Sale{
 		return this.basket;
 	}
 	
+	/**
+	 * Adds an observer to this instance of the class, implemented by <code>TotalRevenueFileOutput</code> and <code>TotalRevenueView</code>
+	 * to be notified when a new sale is completed, and register a new total sum of revenue.
+	 * @param incomeObserver The observer to register to this class instance.
+	 */
 	public void addIncomeObserver(IncomeObserver incomeObserver) {
 		this.incomeObservers.add(incomeObserver);
 	}
 	
+	/**
+	 * Called when the sale is completed and the customer has paid the cashier. Returns the cost so that
+	 * a calculation can be made for the change. This method also notifies all observers of the new payment.
+	 * @return cost  The total amount owed for this sale.
+	 */
 	public double acceptPayment() {
 		double cost = totalCostAndVAT.total + totalCostAndVAT.VAT;
 		this.notifyObservers(cost);
@@ -94,6 +104,13 @@ public class Sale{
 		for(IncomeObserver obs: incomeObservers) {
 			obs.newSale(payment);
 		}
+	}
+	/**
+	 * Getter for the observer list length. Used in the unit testing of the View.
+	 * @return Length of the observer list.
+	 */
+	public int observerListLength() {
+		return this.incomeObservers.size();
 	}
 	
 	

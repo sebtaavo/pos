@@ -8,7 +8,13 @@ package se.kth.sebte.iv1350.pos.model;
  * to pass this information in one neat package between methods and classes.
  */
 public class Cost {
+	/**
+	 * Price total of a basket/sale.
+	 */
 	public double total;
+	/**
+	 * VAT total of a basket/sale.
+	 */
 	public double VAT;
 	
 	/**

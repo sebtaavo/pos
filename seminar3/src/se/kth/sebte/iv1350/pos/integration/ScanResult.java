@@ -9,11 +9,17 @@ package se.kth.sebte.iv1350.pos.integration;
  * newest <code>Item</code> scanned in through the bar-code.
  */
 public class ScanResult {
+	/**
+	 * A DTO containing information about the current contents of the basket in a <code>Sale</code>.
+	 */
 	public BasketDTO basket;
+	/**
+	 * A DTO containing information about the <code>Item</code> generated from an item identifier.
+	 */
 	public ItemDTO item;;
 	
 	/*
-	 * Creates a ScanResult object.
+	 * Constructor for this object.
 	 */
 	public ScanResult(BasketDTO basket, ItemDTO item){
 		this.basket = basket;

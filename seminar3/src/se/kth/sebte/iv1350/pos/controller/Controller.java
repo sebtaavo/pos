@@ -39,7 +39,8 @@ public class Controller {
 	
 	
 	/**
-	 * Signals that a sale has started. Creates a new <code>Sale</code> object.
+	 * Signals that a sale has started. Creates a new <code>Sale</code> object. Attaches this <code>Controller</code>'s
+	 * <code>IncomeObserver</code>s to the <code>Sale</code> object.
 	 */
 	public void startSale() {
 		currentSale = new Sale();
@@ -50,10 +51,13 @@ public class Controller {
 	}
 	
 	/**
-	 * Fetches an item from a bar-code scan. Returns that item, updated basket, and "valid scan" boolean to the <code>View</code>.
+	 * Fetches an item from a bar-code scan. Returns that item and an updated basket in DTO-form to the <code>View</code>.
+	 * If an error is thrown, due to a bad bar-code scan or because the database is offline, we return without adding
+	 * any item to the basket.
 	 * @param itemID  The item identifier obtained through a bar-code scan.
 	 * @param quantity  The amount of the item being purchased.
 	 * @return scanResult  The result of the bar-code scan.
+	 * @throws ItemIdentifierException, DatabaseConnectionException  Throws these exceptions to the View, where they are handled.
 	 */
 	public ScanResult scanItem(int itemID, int quantity) throws ItemIdentifierException, DatabaseConnectionException{
 		Item item = this.dbHandler.fetchItem(itemID, quantity);
@@ -96,6 +100,11 @@ public class Controller {
 		return totalAfterDiscount;
 	}
 	
+	/**
+	 * Adds an object of type <code>IncomeObserver</code> to the list of observers in this class instance. These are passed on
+	 * to a <code>Sale</code> object whenever a new sale is started.
+	 * @param incomeObserver The observer to be added.
+	 */
 	public void addIncomeObserver(IncomeObserver incomeObserver) {
 		this.incomeObservers.add(incomeObserver);
 	}

@@ -24,7 +24,7 @@ public class Discount {
 	/**
 	 * Getter for the attributes of this class instance, through the use of a DTO
 	 * in order to protect the attributes.
-	 * @return
+	 * @return discountDTO  The information about this Discount stored in a DTO.
 	 */
 	public DiscountDTO getDiscountDTO() {
 		DiscountDTO discountDTO = new DiscountDTO(this.itemListDiscount, this.totalCostDiscount, this.customerIDDiscount);

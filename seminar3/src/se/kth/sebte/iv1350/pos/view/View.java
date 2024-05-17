@@ -1,4 +1,6 @@
 package se.kth.sebte.iv1350.pos.view;
+import java.util.ArrayList;
+
 import se.kth.sebte.iv1350.pos.controller.Controller;
 import se.kth.sebte.iv1350.pos.integration.BasketDTO;
 import se.kth.sebte.iv1350.pos.integration.DatabaseConnectionException;
@@ -25,6 +27,10 @@ public class View {
 	double change;
 	private TotalRevenueView revenueView;
 	private TotalRevenueFileOutput revenueFileOutput;
+	/**
+	 * This is list of exceptions is only used for unit testing that they execute correctly.
+	 */
+	private ArrayList<Exception> exceptions;
 	
 	/**
 	 * Creates a new <code>View</code> object to give input to the sale process at a retail store.
@@ -39,6 +45,7 @@ public class View {
 		this.revenueView = new TotalRevenueView();
 		contr.addIncomeObserver(revenueFileOutput);
 		contr.addIncomeObserver(revenueView);
+		exceptions = new ArrayList<Exception>();
 	}
 	
 	/**
@@ -75,10 +82,12 @@ public class View {
 			this.basket = scanResult.basket;
 			this.printScanToConsole(scanResult);
 		}catch(ItemIdentifierException e1) {
+			this.exceptions.add(e1);
 			e1.printStackTrace();
 			Logger.log(e1.getMessage(), "logs/ExceptionLog.txt", true);
 			System.out.println("Barcode did not yield a valid item identifier. Re-scan or enter product manually.");
 		}catch(DatabaseConnectionException e2) {
+			this.exceptions.add(e2);
 			e2.printStackTrace();
 			Logger.log(e2.getMessage(), "logs/ExceptionLog.txt", true);
 			System.out.println("Failed to connect to the inventory server. Check internet connection or status of inventory server.");
@@ -144,6 +153,14 @@ public class View {
 		line = "Total VAT: " + String.valueOf(this.basket.getGrossTotal().VAT) + "\n";
 		System.out.println(line);
 		
+	}
+	
+	/**
+	 * Getter for the list of exceptions collected by this instance of the object,
+	 * is only used for unit testing.
+	 */
+	public ArrayList<Exception> getExceptions() {
+		return this.exceptions;
 	}
 
 }

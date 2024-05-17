@@ -18,9 +18,13 @@ public class InventoryDbHandler {
 	
 	/**
 	 * Fetches an <code>Item</code> or <code>Null</code> object by contacting the database with the ItemID information.
+	 * Throws exceptions generated in the private method call requestItemDTOFromDb() in case the item identifier was faulty
+	 * or if the connection to the external inventory database could not established. The latter is simulated with the hard-coded
+	 * value of "3" as the item identifier.
 	 * @param itemID  Identifier obtained through a bar-code scan.
 	 * @param quantity  Quantity of the scanned item to be registered to the sale.
-	 * @return
+	 * @return itemDTO  The new ItemDTO fetched from a bar-code scan.
+	 * @throws ItemIdentifierException, DatabaseConnectionException  The exceptions thrown all the way up to the <code>View</code> from this method.
 	 */
 	public Item fetchItem(int itemID, int quantity) throws ItemIdentifierException, DatabaseConnectionException{
 		ItemDTO itemDTO;
@@ -47,7 +51,7 @@ public class InventoryDbHandler {
 			}
 				
 		}else {
-			throw new ItemIdentifierException("Item ID " + itemID + " was not found in the external inventory database.");
+			throw new ItemIdentifierException("Item ID " + itemID + " could not be found in the database.");
 		}
 	}
 		

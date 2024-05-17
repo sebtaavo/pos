@@ -65,6 +65,10 @@ public class Basket {
 		return itemList;
 	}
 	
+	/**
+	 * Getter for a DTO object containing information about the items currently in this basket.
+	 * @return
+	 */
 	public BasketDTO getBasketDTO(){
 		return new BasketDTO(this);
 	}
