@@ -24,13 +24,6 @@ public class Main {
 	public static void main(String[] args) {
 		Main main = new Main();
 		main.view.startSale();
-		main.view.scanItem(69, 2);
-		main.view.scanItem(2, 1);
-		main.view.endSale();
-		main.view.requestDiscount(1337);
-		main.view.presentPayment(500);
-		
-		main.view.startSale();
 		main.view.scanItem(1, 2);
 		main.view.scanItem(2, 1);
 		main.view.endSale();
