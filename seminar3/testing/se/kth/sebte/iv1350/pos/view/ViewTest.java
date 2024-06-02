@@ -74,7 +74,7 @@ class ViewTest {
 		//Test that we wrote the exception to the log file.
 		try {
 			String logContent = new String(Files.readAllBytes(Paths.get("logs/ExceptionLog.txt")));
-	        String logEntry = "Item ID 69 could not be found in the database"; //This does not account for previous such errors RETURN HERE
+	        String logEntry = "Item ID 69 could not be found in the database";
 			assertTrue(logContent.contains(logEntry), "Log did not contain the expected exception.");
 		}catch(IOException ie) {
 			ie.printStackTrace();
